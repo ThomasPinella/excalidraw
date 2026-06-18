@@ -69,24 +69,27 @@ const findColorLiteralsOnLine = (line) => {
   }
 
   // Data URIs and other url() values often embed encoded colors.
-  if (/url\s*\(/i.test(line)) {
+  const lineWithoutUrls = line.replace(
+    /url\s*\((?:"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|[^)])*\)/gi,
+    (match) => " ".repeat(match.length),
+  );
+
+  const matches = Array.from(lineWithoutUrls.matchAll(COLOR_LITERAL));
+  if (matches.length === 0) {
     return [];
   }
 
-  const matches = line.match(COLOR_LITERAL);
-  if (!matches) {
-    return [];
-  }
-
-  return matches.filter((match) => {
-    const index = line.indexOf(match);
-    const before = line.slice(0, index);
-    // Ignore literals inside var(--...) references (shouldn't happen, but safe).
-    if (/var\s*\(\s*--[^,)]*$/.test(before)) {
-      return false;
-    }
-    return true;
-  });
+  return matches
+    .filter((match) => {
+      const index = match.index;
+      const before = line.slice(0, index);
+      // Ignore literals inside var(--...) references (shouldn't happen, but safe).
+      if (/var\s*\(\s*--[^,)]*$/.test(before)) {
+        return false;
+      }
+      return true;
+    })
+    .map((match) => match[0]);
 };
 
 const exitWithGitError = (description, error) => {
