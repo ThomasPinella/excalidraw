@@ -140,6 +140,7 @@ import DebugCanvas, {
   loadSavedDebugState,
 } from "./components/DebugCanvas";
 import { AIComponents } from "./components/AI";
+import { LayersPanel } from "./components/LayersPanel";
 import { ExcalidrawPlusIframeExport } from "./ExcalidrawPlusIframeExport";
 
 import "./index.scss";
@@ -1245,6 +1246,7 @@ const ExcalidrawWrapper = () => {
             },
           ]}
         />
+        {excalidrawAPI && <LayersPanel excalidrawAPI={excalidrawAPI} />}
         {isVisualDebuggerEnabled() && excalidrawAPI && (
           <DebugCanvas
             appState={excalidrawAPI.getAppState()}
