@@ -102,6 +102,7 @@ const getMergeBase = () => {
   try {
     return execSync(`git merge-base HEAD ${baseRef}`, {
       encoding: "utf8",
+      stdio: ["ignore", "pipe", "pipe"],
     }).trim();
   } catch (error) {
     exitWithGitError(`git merge-base HEAD ${baseRef}`, error);
@@ -115,6 +116,7 @@ const getChangedLineNumbers = (filePath) => {
     diff = execSync(`git diff -U0 ${mergeBase} -- ${filePath}`, {
       encoding: "utf8",
       maxBuffer: 10 * 1024 * 1024,
+      stdio: ["ignore", "pipe", "pipe"],
     });
   } catch (error) {
     exitWithGitError(`git diff -U0 ${mergeBase} -- ${filePath}`, error);
@@ -179,7 +181,7 @@ const lintChanged = () => {
   try {
     changedFiles = execSync(
       `git diff --name-only ${mergeBase} -- ${TARGET_DIRS.map((d) => JSON.stringify(d)).join(" ")}`,
-      { encoding: "utf8" },
+      { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] },
     )
       .split("\n")
       .map((f) => f.trim())
