@@ -68,11 +68,6 @@ const findColorLiteralsOnLine = (line) => {
     return [];
   }
 
-  // CSS variables and Sass variables are the preferred approach.
-  if (/\$[a-zA-Z_-]/.test(line)) {
-    return [];
-  }
-
   // Data URIs and other url() values often embed encoded colors.
   if (/url\s*\(/i.test(line)) {
     return [];
