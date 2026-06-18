@@ -6055,8 +6055,7 @@ class App extends React.Component<AppProps, AppState> {
     )
       .filter(
         (el) =>
-          !el.hidden &&
-          !(el.frameId && elementsMap.get(el.frameId)?.hidden),
+          !el.hidden && !(el.frameId && elementsMap.get(el.frameId)?.hidden),
       )
       .filter((el) => this.hitElement(x, y, el))
       .filter((element) => {

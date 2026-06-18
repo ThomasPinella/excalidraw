@@ -201,8 +201,7 @@ export const reorderForDrop = (
   const sameOrder =
     ordered.length === original.length &&
     ordered.every((id, index) => id === original[index]);
-  const sameFrame =
-    (dragged.frameId ?? null) === newFrameId;
+  const sameFrame = (dragged.frameId ?? null) === newFrameId;
   if (sameOrder && sameFrame) {
     return null;
   }
