@@ -89,14 +89,22 @@ const findColorLiteralsOnLine = (line) => {
   });
 };
 
+const exitWithGitError = (description, error) => {
+  const stderr = error.stderr?.toString().trim();
+  const message = stderr || error.message;
+  console.error(`design-system: ${description} failed.`);
+  console.error(message);
+  process.exit(1);
+};
+
 const getMergeBase = () => {
   const baseRef = process.env.DESIGN_SYSTEM_BASE_REF || "origin/master";
   try {
     return execSync(`git merge-base HEAD ${baseRef}`, {
       encoding: "utf8",
     }).trim();
-  } catch {
-    return baseRef;
+  } catch (error) {
+    exitWithGitError(`git merge-base HEAD ${baseRef}`, error);
   }
 };
 
@@ -108,8 +116,8 @@ const getChangedLineNumbers = (filePath) => {
       encoding: "utf8",
       maxBuffer: 10 * 1024 * 1024,
     });
-  } catch {
-    return [];
+  } catch (error) {
+    exitWithGitError(`git diff -U0 ${mergeBase} -- ${filePath}`, error);
   }
 
   const lineNumbers = [];
@@ -177,8 +185,11 @@ const lintChanged = () => {
       .map((f) => f.trim())
       .filter(Boolean)
       .filter(isTargetFile);
-  } catch {
-    changedFiles = [];
+  } catch (error) {
+    exitWithGitError(
+      `git diff --name-only ${mergeBase} -- ${TARGET_DIRS.join(" ")}`,
+      error,
+    );
   }
 
   const violations = [];
