@@ -78,6 +78,9 @@ type _ExcalidrawElementBase = Readonly<{
   updated: number;
   link: string | null;
   locked: boolean;
+  /** when true, the element is hidden from the canvas, hit-testing and export
+      (e.g. via the layers panel visibility toggle). */
+  hidden?: boolean;
   customData?: Record<string, any>;
 }>;
 
