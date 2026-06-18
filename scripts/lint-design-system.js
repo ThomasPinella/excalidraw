@@ -87,7 +87,7 @@ const findColorLiteralsOnLine = (line) => {
     const index = line.indexOf(match);
     const before = line.slice(0, index);
     // Ignore literals inside var(--...) references (shouldn't happen, but safe).
-    if (/var\s*\(\s*--[^)]*$/.test(before)) {
+    if (/var\s*\(\s*--[^,)]*$/.test(before)) {
       return false;
     }
     return true;
