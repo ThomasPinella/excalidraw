@@ -68,6 +68,7 @@
     "test:app": "vitest",
     "test:code": "eslint --max-warnings=0 --ext .js,.ts,.tsx .",
     "test:other": "yarn prettier --list-different",
+    "lint:design-system": "node scripts/lint-design-system.js",
     "test:typecheck": "tsc",
     "test:update": "yarn test:app --update --watch=false",
     "test": "yarn test:app",
