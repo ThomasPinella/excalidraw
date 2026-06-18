@@ -33,8 +33,7 @@ const COLOR_LITERAL =
   /#(?:[0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})\b|rgba?\([^)]*\)|hsla?\([^)]*\)/g;
 
 const CSS_ID_SELECTOR_FOLLOWER = /^\s*(?:$|[{:.,>[+~)])/;
-const CSS_DECLARATION_PREFIX =
-  /(?:^|[{;]\s*)(?:\$[-\w]+|[-\w]+)\s*:[^{};]*$/;
+const CSS_DECLARATION_PREFIX = /(?:^|[{;]\s*)(?:\$[-\w]+|[-\w]+)\s*:[^{};]*$/;
 
 const isTargetFile = (filePath) => {
   const normalized = filePath.replace(/\\/g, "/");
@@ -45,9 +44,7 @@ const isTargetFile = (filePath) => {
     return false;
   }
   return TARGET_DIRS.some(
-    (dir) =>
-      normalized.startsWith(`${dir}/`) ||
-      normalized === dir,
+    (dir) => normalized.startsWith(`${dir}/`) || normalized === dir,
   );
 };
 
@@ -206,7 +203,9 @@ const lintChanged = () => {
   let changedFiles;
   try {
     changedFiles = execSync(
-      `git diff --name-only ${mergeBase} -- ${TARGET_DIRS.map((d) => JSON.stringify(d)).join(" ")}`,
+      `git diff --name-only ${mergeBase} -- ${TARGET_DIRS.map((d) =>
+        JSON.stringify(d),
+      ).join(" ")}`,
       { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] },
     )
       .split("\n")
@@ -259,8 +258,8 @@ const main = () => {
   }
 
   if (violations.length === 0) {
-    console.log(
-      `design-system: no hardcoded color literals found (${mode} mode).`,
+    process.stdout.write(
+      `design-system: no hardcoded color literals found (${mode} mode).\n`,
     );
     process.exit(0);
   }
