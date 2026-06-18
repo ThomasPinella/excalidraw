@@ -63,24 +63,72 @@ const isCommentLine = (line) => {
   );
 };
 
+const stripInlineComments = (line) => {
+  let stripped = "";
+  let quote = null;
+
+  for (let index = 0; index < line.length; index++) {
+    const char = line[index];
+    const next = line[index + 1];
+
+    if (quote) {
+      stripped += char;
+      if (char === "\\") {
+        stripped += next || "";
+        index += 1;
+        continue;
+      }
+      if (char === quote) {
+        quote = null;
+      }
+      continue;
+    }
+
+    if (char === '"' || char === "'" || char === "`") {
+      quote = char;
+      stripped += char;
+      continue;
+    }
+
+    if (char === "/" && next === "/") {
+      break;
+    }
+
+    if (char === "/" && next === "*") {
+      const endIndex = line.indexOf("*/", index + 2);
+      if (endIndex === -1) {
+        break;
+      }
+      index = endIndex + 1;
+      continue;
+    }
+
+    stripped += char;
+  }
+
+  return stripped;
+};
+
 const findColorLiteralsOnLine = (line) => {
   if (isCommentLine(line)) {
     return [];
   }
 
+  const strippedLine = stripInlineComments(line);
+
   // Data URIs and other url() values often embed encoded colors.
-  if (/url\s*\(/i.test(line)) {
+  if (/url\s*\(/i.test(strippedLine)) {
     return [];
   }
 
-  const matches = line.match(COLOR_LITERAL);
+  const matches = strippedLine.match(COLOR_LITERAL);
   if (!matches) {
     return [];
   }
 
   return matches.filter((match) => {
-    const index = line.indexOf(match);
-    const before = line.slice(0, index);
+    const index = strippedLine.indexOf(match);
+    const before = strippedLine.slice(0, index);
     // Ignore literals inside var(--...) references (shouldn't happen, but safe).
     if (/var\s*\(\s*--[^,)]*$/.test(before)) {
       return false;
