@@ -32,6 +32,10 @@ const FILE_ALLOWLIST = new Set([
 const COLOR_LITERAL =
   /#(?:[0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})\b|rgba?\([^)]*\)|hsla?\([^)]*\)/g;
 
+const CSS_ID_SELECTOR_FOLLOWER = /^\s*(?:$|[{:.,>[+~)])/;
+const CSS_DECLARATION_PREFIX =
+  /(?:^|[{;]\s*)(?:\$[-\w]+|[-\w]+)\s*:[^{};]*$/;
+
 const isTargetFile = (filePath) => {
   const normalized = filePath.replace(/\\/g, "/");
   if (!TARGET_EXT.test(normalized)) {
@@ -64,6 +68,17 @@ const isCommentLine = (line) => {
   );
 };
 
+const isCssIdSelectorLiteral = (line, index, literal) => {
+  const before = line.slice(0, index);
+  const after = line.slice(index + literal.length);
+
+  return (
+    literal.startsWith("#") &&
+    CSS_ID_SELECTOR_FOLLOWER.test(after) &&
+    !CSS_DECLARATION_PREFIX.test(before)
+  );
+};
+
 const findColorLiteralsOnLine = (line) => {
   if (isCommentLine(line)) {
     return [];
@@ -86,6 +101,9 @@ const findColorLiteralsOnLine = (line) => {
       const before = line.slice(0, index);
       // Ignore literals inside var(--...) references (shouldn't happen, but safe).
       if (/var\s*\(\s*--[^,)]*$/.test(before)) {
+        return false;
+      }
+      if (isCssIdSelectorLiteral(line, index, match[0])) {
         return false;
       }
       return true;
