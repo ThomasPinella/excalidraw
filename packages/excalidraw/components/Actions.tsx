@@ -32,6 +32,7 @@ import type {
 import { actionToggleZenMode } from "../actions";
 
 import { alignActionsPredicate } from "../actions/actionAlign";
+import { tidyActionsPredicate } from "../actions/actionTidyUp";
 import { trackEvent } from "../analytics";
 import { useTunnels } from "../context/tunnels";
 
@@ -185,6 +186,8 @@ export const SelectedShapeActions = ({
 
   const showAlignActions =
     !isSingleElementBoundContainer && alignActionsPredicate(appState, app);
+  const showTidyAction =
+    !isSingleElementBoundContainer && tidyActionsPredicate(appState, app);
 
   return (
     <div className="selected-shape-actions">
@@ -291,6 +294,7 @@ export const SelectedShapeActions = ({
               {renderAction("alignBottom")}
               {targetElements.length > 2 &&
                 renderAction("distributeVertically")}
+              {showTidyAction && renderAction("tidyUp")}
             </div>
           </div>
         </fieldset>
@@ -633,6 +637,7 @@ const CombinedExtraActions = ({
     isImageElement(targetElements[0]);
   const showLinkIcon = targetElements.length === 1;
   const showAlignActions = alignActionsPredicate(appState, app);
+  const showTidyAction = tidyActionsPredicate(appState, app);
   let isSingleElementBoundContainer = false;
   if (
     targetElements.length === 2 &&
@@ -735,6 +740,7 @@ const CombinedExtraActions = ({
                       {renderAction("alignBottom")}
                       {targetElements.length > 2 &&
                         renderAction("distributeVertically")}
+                      {showTidyAction && renderAction("tidyUp")}
                     </div>
                   </div>
                 </fieldset>

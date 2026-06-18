@@ -112,6 +112,7 @@ export type ActionName =
   | "alignHorizontallyCentered"
   | "distributeHorizontally"
   | "distributeVertically"
+  | "tidyUp"
   | "flipHorizontal"
   | "flipVertical"
   | "deselect"
