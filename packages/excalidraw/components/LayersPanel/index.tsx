@@ -341,8 +341,9 @@ export const LayersPanel = ({
   };
 
   return (
-    <Island className="layers-panel">
-      <div className="layers-panel__header">
+    <div className="layers-panel">
+      <Island className="layers-panel__island" padding={0}>
+        <div className="layers-panel__header">
         <button
           type="button"
           className="layers-panel__title"
@@ -387,6 +388,7 @@ export const LayersPanel = ({
           )}
         </div>
       )}
-    </Island>
+      </Island>
+    </div>
   );
 };
