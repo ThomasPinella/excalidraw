@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 import {
   getRootElements,
@@ -47,6 +47,8 @@ interface LayersPanelProps {
   onClose: () => void;
 }
 
+const DRAG_THRESHOLD = 4;
+
 const getElementLabel = (element: ExcalidrawElement): string => {
   if (isFrameLikeElement(element)) {
     return getFrameLikeTitle(element as ExcalidrawFrameLikeElement);
@@ -75,6 +77,8 @@ export const LayersPanel = ({
   const [dropIndicator, setDropIndicator] = useState<LayerDropTarget | null>(
     null,
   );
+  // set right after a drag so the trailing click doesn't trigger selection
+  const suppressClick = useRef(false);
 
   const elementsMap = useMemo(() => {
     const map = new Map<string, ExcalidrawElement>();
@@ -110,19 +114,57 @@ export const LayersPanel = ({
     };
   }, [elements]);
 
-  const cleanupDrag = () => {
-    setDraggingId(null);
-    setDropIndicator(null);
+  const resolveTargetFromPoint = (
+    clientX: number,
+    clientY: number,
+    draggedId: string,
+  ): LayerDropTarget | null => {
+    const pointed = document.elementFromPoint(clientX, clientY);
+    if (!pointed) {
+      return null;
+    }
+    const rowEl = pointed.closest<HTMLElement>("[data-layer-id]");
+    if (!rowEl) {
+      return pointed.closest(".layers-panel__list")
+        ? { type: "root-top" }
+        : null;
+    }
+    const targetId = rowEl.dataset.layerId!;
+    if (targetId === draggedId) {
+      return null;
+    }
+    const targetElement = elementsMap.get(targetId);
+    if (!targetElement) {
+      return null;
+    }
+    const rect = rowEl.getBoundingClientRect();
+    const ratio = (clientY - rect.top) / rect.height;
+    const draggedIsFrame = isFrameLikeElement(elementsMap.get(draggedId)!);
+
+    if (isFrameLikeElement(targetElement) && !draggedIsFrame) {
+      if (ratio < 0.25) {
+        return { type: "relative", refId: targetId, place: "front" };
+      }
+      if (ratio > 0.75) {
+        return { type: "relative", refId: targetId, place: "behind" };
+      }
+      return { type: "into-frame", frameId: targetId };
+    }
+
+    return {
+      type: "relative",
+      refId: targetId,
+      place: ratio < 0.5 ? "front" : "behind",
+    };
   };
 
-  const applyDrop = (target: LayerDropTarget | null) => {
-    if (!draggingId || !target) {
-      cleanupDrag();
+  const applyDrop = (draggedId: string, target: LayerDropTarget | null) => {
+    if (!target) {
       return;
     }
     const next = reorderForDrop(
       app.scene.getElementsIncludingDeleted(),
-      draggingId,
+      draggedId,
       target,
     );
     if (next) {
@@ -131,33 +173,50 @@ export const LayersPanel = ({
         captureUpdate: CaptureUpdateAction.IMMEDIATELY,
       });
     }
-    cleanupDrag();
   };
 
-  const computeRowDropTarget = (
-    event: React.DragEvent,
-    element: ExcalidrawElement,
-  ): LayerDropTarget => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    const ratio = (event.clientY - rect.top) / rect.height;
-    const draggedIsFrame =
-      !!draggingId && isFrameLikeElement(elementsMap.get(draggingId)!);
-
-    if (isFrameLikeElement(element) && !draggedIsFrame) {
-      if (ratio < 0.25) {
-        return { type: "relative", refId: element.id, place: "front" };
-      }
-      if (ratio > 0.75) {
-        return { type: "relative", refId: element.id, place: "behind" };
-      }
-      return { type: "into-frame", frameId: element.id };
+  const startDrag = (element: ExcalidrawElement, event: React.PointerEvent) => {
+    if (event.button !== 0) {
+      return;
     }
+    const startX = event.clientX;
+    const startY = event.clientY;
+    let active = false;
+    let lastTarget: LayerDropTarget | null = null;
 
-    return {
-      type: "relative",
-      refId: element.id,
-      place: ratio < 0.5 ? "front" : "behind",
+    const onMove = (moveEvent: PointerEvent) => {
+      if (!active) {
+        if (
+          Math.abs(moveEvent.clientX - startX) +
+            Math.abs(moveEvent.clientY - startY) <
+          DRAG_THRESHOLD
+        ) {
+          return;
+        }
+        active = true;
+        setDraggingId(element.id);
+      }
+      lastTarget = resolveTargetFromPoint(
+        moveEvent.clientX,
+        moveEvent.clientY,
+        element.id,
+      );
+      setDropIndicator(lastTarget);
     };
+
+    const onUp = () => {
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+      if (active) {
+        suppressClick.current = true;
+        applyDrop(element.id, lastTarget);
+      }
+      setDraggingId(null);
+      setDropIndicator(null);
+    };
+
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
   };
 
   const selectElement = (
@@ -165,6 +224,10 @@ export const LayersPanel = ({
     event: React.MouseEvent,
   ) => {
     event.stopPropagation();
+    if (suppressClick.current) {
+      suppressClick.current = false;
+      return;
+    }
     const additive = event.shiftKey || event.metaKey || event.ctrlKey;
     setAppState((prevState) => {
       const selectedElementIds = additive
@@ -229,6 +292,10 @@ export const LayersPanel = ({
     });
   };
 
+  const stopButtonPointer = (event: React.PointerEvent) => {
+    event.stopPropagation();
+  };
+
   const renderRow = (element: ExcalidrawElement, depth: number) => {
     const isFrame = isFrameLikeElement(element);
     const isSelected = !!appState.selectedElementIds[element.id];
@@ -251,6 +318,7 @@ export const LayersPanel = ({
     return (
       <div
         key={element.id}
+        data-layer-id={element.id}
         className={clsx("layers-panel__row", {
           "layers-panel__row--selected": isSelected,
           "layers-panel__row--dragging": draggingId === element.id,
@@ -260,32 +328,14 @@ export const LayersPanel = ({
           "layers-panel__row--drop-into": dropInto,
         })}
         style={{ paddingLeft: `${8 + depth * 16}px` }}
-        draggable
+        onPointerDown={(event) => startDrag(element, event)}
         onClick={(event) => selectElement(element, event)}
-        onDragStart={(event) => {
-          setDraggingId(element.id);
-          event.dataTransfer.effectAllowed = "move";
-          event.dataTransfer.setData("text/plain", element.id);
-        }}
-        onDragEnd={cleanupDrag}
-        onDragOver={(event) => {
-          if (!draggingId) {
-            return;
-          }
-          event.preventDefault();
-          event.stopPropagation();
-          setDropIndicator(computeRowDropTarget(event, element));
-        }}
-        onDrop={(event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          applyDrop(computeRowDropTarget(event, element));
-        }}
       >
         {isFrame ? (
           <button
             type="button"
             className="layers-panel__caret"
+            onPointerDown={stopButtonPointer}
             onClick={(event) => {
               event.stopPropagation();
               setCollapsedFrames((prev) => ({
@@ -309,6 +359,7 @@ export const LayersPanel = ({
           type="button"
           className="layers-panel__action"
           title={element.hidden ? t("layersPanel.show") : t("layersPanel.hide")}
+          onPointerDown={stopButtonPointer}
           onClick={(event) => toggleVisibility(element, event)}
         >
           {element.hidden ? eyeClosedIcon : eyeIcon}
@@ -317,6 +368,7 @@ export const LayersPanel = ({
           type="button"
           className="layers-panel__action layers-panel__action--delete"
           title={t("layersPanel.delete")}
+          onPointerDown={stopButtonPointer}
           onClick={(event) => deleteElement(element, event)}
         >
           {TrashIcon}
@@ -344,50 +396,42 @@ export const LayersPanel = ({
     <div className="layers-panel">
       <Island className="layers-panel__island" padding={0}>
         <div className="layers-panel__header">
-        <button
-          type="button"
-          className="layers-panel__title"
-          onClick={() => setCollapsed((value) => !value)}
-        >
-          <span className="layers-panel__icon">{layersIcon}</span>
-          {t("layersPanel.title")}
-          <span className="layers-panel__icon">
-            {collapsed ? collapseDownIcon : collapseUpIcon}
-          </span>
-        </button>
-        <button
-          type="button"
-          className="layers-panel__close"
-          title={t("buttons.close")}
-          onClick={onClose}
-        >
-          {CloseIcon}
-        </button>
-      </div>
-      {!collapsed && (
-        <div
-          className={clsx("layers-panel__list", {
-            "layers-panel__list--drop-root": dropIndicator?.type === "root-top",
-          })}
-          onDragOver={(event) => {
-            if (!draggingId) {
-              return;
-            }
-            event.preventDefault();
-            setDropIndicator({ type: "root-top" });
-          }}
-          onDrop={(event) => {
-            event.preventDefault();
-            applyDrop({ type: "root-top" });
-          }}
-        >
-          {displayRoots.length === 0 ? (
-            <div className="layers-panel__empty">{t("layersPanel.empty")}</div>
-          ) : (
-            displayRoots.map((element) => renderNode(element, 0))
-          )}
+          <button
+            type="button"
+            className="layers-panel__title"
+            onClick={() => setCollapsed((value) => !value)}
+          >
+            <span className="layers-panel__icon">{layersIcon}</span>
+            {t("layersPanel.title")}
+            <span className="layers-panel__icon">
+              {collapsed ? collapseDownIcon : collapseUpIcon}
+            </span>
+          </button>
+          <button
+            type="button"
+            className="layers-panel__close"
+            title={t("buttons.close")}
+            onClick={onClose}
+          >
+            {CloseIcon}
+          </button>
         </div>
-      )}
+        {!collapsed && (
+          <div
+            className={clsx("layers-panel__list", {
+              "layers-panel__list--drop-root":
+                dropIndicator?.type === "root-top",
+            })}
+          >
+            {displayRoots.length === 0 ? (
+              <div className="layers-panel__empty">
+                {t("layersPanel.empty")}
+              </div>
+            ) : (
+              displayRoots.map((element) => renderNode(element, 0))
+            )}
+          </div>
+        )}
       </Island>
     </div>
   );
