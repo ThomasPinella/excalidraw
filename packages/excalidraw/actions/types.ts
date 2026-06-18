@@ -62,6 +62,7 @@ export type ActionName =
   | "arrowBinding"
   | "midpointSnapping"
   | "stats"
+  | "layersPanel"
   | "changeStrokeColor"
   | "changeBackgroundColor"
   | "changeFillStyle"

@@ -1945,6 +1945,16 @@ export const stackPushIcon = createIcon(
   tablerIconProps,
 );
 
+export const layersIcon = createIcon(
+  <g>
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M12 4l-8 4l8 4l8 -4l-8 -4" />
+    <path d="M4 12l8 4l8 -4" />
+    <path d="M4 16l8 4l8 -4" />
+  </g>,
+  tablerIconProps,
+);
+
 export const ArrowRightIcon = createIcon(
   <g strokeWidth="1.25">
     <path d="M4.16602 10H15.8327" />

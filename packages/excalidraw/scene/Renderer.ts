@@ -65,6 +65,12 @@ export class Renderer {
   }): readonly NonDeletedExcalidrawElement[] {
     const visibleElements: NonDeletedExcalidrawElement[] = [];
     for (const element of elementsMap.values()) {
+      if (element.hidden) {
+        continue;
+      }
+      if (element.frameId && elementsMap.get(element.frameId)?.hidden) {
+        continue;
+      }
       if (
         isElementInViewport(
           element,

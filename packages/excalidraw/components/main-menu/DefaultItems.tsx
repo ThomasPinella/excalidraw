@@ -13,6 +13,7 @@ import {
   actionToggleGridMode,
   actionToggleMidpointSnapping,
   actionToggleObjectsSnapMode,
+  actionToggleLayersPanel,
   actionToggleSearchMenu,
   actionToggleStats,
   actionToggleTheme,
@@ -598,6 +599,23 @@ const PreferencesToggleElementPropertiesItem = () => {
   );
 };
 
+const PreferencesToggleLayersPanelItem = () => {
+  const { t } = useI18n();
+  const actionManager = useExcalidrawActionManager();
+  const appState = useUIAppState();
+  return (
+    <DropdownMenuItemCheckbox
+      checked={appState.layersPanelOpen}
+      onSelect={(event) => {
+        actionManager.executeAction(actionToggleLayersPanel);
+        event.preventDefault();
+      }}
+    >
+      {t("layersPanel.title")}
+    </DropdownMenuItemCheckbox>
+  );
+};
+
 export const Preferences = ({
   children,
   additionalItems,
@@ -621,6 +639,7 @@ export const Preferences = ({
             <PreferencesToggleZenModeItem />
             <PreferencesToggleViewModeItem />
             <PreferencesToggleElementPropertiesItem />
+            <PreferencesToggleLayersPanelItem />
             <PreferencesToggleArrowBindingItem />
             <PreferencesToggleMidpointSnappingItem />
           </>

@@ -448,6 +448,8 @@ export interface AppState {
     /** bitmap. Use `STATS_PANELS` bit values */
     panels: number;
   };
+  /** whether the layers & frames panel (bottom-right) is open */
+  layersPanelOpen: boolean;
   showHyperlinkPopup: false | "info" | "editor";
   selectedLinearElement: LinearElementEditor | null;
   snapLines: readonly SnapLine[];

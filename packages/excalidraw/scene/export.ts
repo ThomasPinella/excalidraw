@@ -156,6 +156,17 @@ const prepareElementsForRender = ({
 }) => {
   let nextElements: readonly ExcalidrawElement[];
 
+  const hiddenFrameIds = new Set(
+    elements
+      .filter((element) => element.hidden && element.type.includes("frame"))
+      .map((element) => element.id),
+  );
+  elements = elements.filter(
+    (element) =>
+      !element.hidden &&
+      !(element.frameId && hiddenFrameIds.has(element.frameId)),
+  );
+
   if (exportingFrame) {
     nextElements = getElementsOverlappingFrame(
       elements,

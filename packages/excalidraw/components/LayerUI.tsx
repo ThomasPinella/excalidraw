@@ -18,7 +18,7 @@ import { ShapeCache } from "@excalidraw/element";
 
 import type { NonDeletedExcalidrawElement } from "@excalidraw/element/types";
 
-import { actionToggleStats } from "../actions";
+import { actionToggleStats, actionToggleLayersPanel } from "../actions";
 import { trackEvent } from "../analytics";
 import { TunnelsContext, useInitializeTunnels } from "../context/tunnels";
 import { UIAppStateContext } from "../context/ui-appState";
@@ -50,6 +50,7 @@ import { sidebarRightIcon } from "./icons";
 import { DefaultSidebar } from "./DefaultSidebar";
 import { TTDDialog } from "./TTDDialog/TTDDialog";
 import { Stats } from "./Stats";
+import { LayersPanel } from "./LayersPanel";
 import ElementLinkDialog from "./ElementLinkDialog";
 import { ErrorDialog } from "./ErrorDialog";
 import { EyeDropper, activeEyeDropperAtom } from "./EyeDropper";
@@ -631,6 +632,19 @@ const LayerUI = ({
                 )}
               </div>
             )}
+            {appState.layersPanelOpen &&
+              !appState.zenModeEnabled &&
+              !appState.viewModeEnabled && (
+                <LayersPanel
+                  app={app}
+                  appState={appState}
+                  setAppState={setAppState}
+                  elements={elements}
+                  onClose={() =>
+                    actionManager.executeAction(actionToggleLayersPanel)
+                  }
+                />
+              )}
           </div>
           {renderSidebars()}
         </>

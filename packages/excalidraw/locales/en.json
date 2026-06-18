@@ -545,6 +545,15 @@
     "versionNotAvailable": "Version not available",
     "width": "Width"
   },
+  "layersPanel": {
+    "title": "Layers",
+    "empty": "No elements on the canvas",
+    "show": "Show",
+    "hide": "Hide",
+    "delete": "Delete",
+    "frame": "Frame",
+    "untitled": "Untitled"
+  },
   "toast": {
     "addedToLibrary": "Added to library",
     "copyStyles": "Copied styles.",
