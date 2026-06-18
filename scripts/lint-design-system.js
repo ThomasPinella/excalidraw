@@ -58,6 +58,7 @@ const isCommentLine = (line) => {
   const trimmed = line.trim();
   return (
     trimmed.startsWith("//") ||
+    trimmed.startsWith("{/*") ||
     trimmed.startsWith("*") ||
     trimmed.startsWith("/*")
   );
