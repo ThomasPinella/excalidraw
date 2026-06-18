@@ -7,7 +7,7 @@
  *   node scripts/lint-design-system.js --all     # scan all target files (audit)
  *
  * Env:
- *   DESIGN_SYSTEM_BASE_REF — override merge base (default: origin/master)
+ *   DESIGN_SYSTEM_BASE_REF — override merge base (default: origin/${GITHUB_BASE_REF} in GitHub PRs, else origin/master)
  */
 
 const { execSync } = require("child_process");
@@ -101,7 +101,11 @@ const exitWithGitError = (description, error) => {
 };
 
 const getMergeBase = () => {
-  const baseRef = process.env.DESIGN_SYSTEM_BASE_REF || "origin/master";
+  const baseRef =
+    process.env.DESIGN_SYSTEM_BASE_REF ||
+    (process.env.GITHUB_BASE_REF
+      ? `origin/${process.env.GITHUB_BASE_REF}`
+      : "origin/master");
   try {
     return execSync(`git merge-base HEAD ${baseRef}`, {
       encoding: "utf8",
