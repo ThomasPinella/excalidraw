@@ -1,0 +1,651 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`tidy up integration > tidies messy flowchart via action 1`] = `
+{
+  "angle": 0,
+  "backgroundColor": "transparent",
+  "boundElements": [
+    {
+      "id": "tidy-arrow-start-proc-a",
+      "type": "arrow",
+    },
+  ],
+  "fillStyle": "hachure",
+  "frameId": null,
+  "groupIds": [],
+  "height": 60,
+  "id": "tidy-start",
+  "index": "a0",
+  "isDeleted": false,
+  "link": null,
+  "locked": false,
+  "opacity": 100,
+  "roughness": 1,
+  "roundness": null,
+  "seed": 1,
+  "strokeColor": "#000000",
+  "strokeStyle": "solid",
+  "strokeWidth": 1,
+  "type": "rectangle",
+  "updated": 1,
+  "version": 3,
+  "versionNonce": 493213705,
+  "width": 120,
+  "x": 110,
+  "y": 50,
+}
+`;
+
+exports[`tidy up integration > tidies messy flowchart via action 2`] = `
+{
+  "angle": 0,
+  "backgroundColor": "transparent",
+  "boundElements": [
+    {
+      "id": "tidy-arrow-start-proc-a",
+      "type": "arrow",
+    },
+    {
+      "id": "tidy-arrow-proc-a-decision",
+      "type": "arrow",
+    },
+  ],
+  "fillStyle": "hachure",
+  "frameId": null,
+  "groupIds": [],
+  "height": 60,
+  "id": "tidy-proc-a",
+  "index": "a1",
+  "isDeleted": false,
+  "link": null,
+  "locked": false,
+  "opacity": 100,
+  "roughness": 1,
+  "roundness": null,
+  "seed": 1,
+  "strokeColor": "#000000",
+  "strokeStyle": "solid",
+  "strokeWidth": 1,
+  "type": "rectangle",
+  "updated": 1,
+  "version": 3,
+  "versionNonce": 1723083209,
+  "width": 120,
+  "x": 110,
+  "y": 210,
+}
+`;
+
+exports[`tidy up integration > tidies messy flowchart via action 3`] = `
+{
+  "angle": 0,
+  "backgroundColor": "transparent",
+  "boundElements": [
+    {
+      "id": "tidy-arrow-proc-a-decision",
+      "type": "arrow",
+    },
+    {
+      "id": "tidy-arrow-decision-yes",
+      "type": "arrow",
+    },
+    {
+      "id": "tidy-arrow-decision-no",
+      "type": "arrow",
+    },
+  ],
+  "fillStyle": "hachure",
+  "frameId": null,
+  "groupIds": [],
+  "height": 80,
+  "id": "tidy-decision",
+  "index": "a2",
+  "isDeleted": false,
+  "link": null,
+  "locked": false,
+  "opacity": 100,
+  "roughness": 1,
+  "roundness": null,
+  "seed": 1,
+  "strokeColor": "#000000",
+  "strokeStyle": "solid",
+  "strokeWidth": 1,
+  "type": "diamond",
+  "updated": 1,
+  "version": 3,
+  "versionNonce": 640725609,
+  "width": 140,
+  "x": 100,
+  "y": 370,
+}
+`;
+
+exports[`tidy up integration > tidies messy flowchart via action 4`] = `
+{
+  "angle": 0,
+  "backgroundColor": "transparent",
+  "boundElements": [
+    {
+      "id": "tidy-arrow-decision-yes",
+      "type": "arrow",
+    },
+    {
+      "id": "tidy-arrow-yes-end",
+      "type": "arrow",
+    },
+  ],
+  "fillStyle": "hachure",
+  "frameId": null,
+  "groupIds": [],
+  "height": 50,
+  "id": "tidy-yes",
+  "index": "a3",
+  "isDeleted": false,
+  "link": null,
+  "locked": false,
+  "opacity": 100,
+  "roughness": 1,
+  "roundness": null,
+  "seed": 1,
+  "strokeColor": "#000000",
+  "strokeStyle": "solid",
+  "strokeWidth": 1,
+  "type": "rectangle",
+  "updated": 1,
+  "version": 3,
+  "versionNonce": 2101589481,
+  "width": 100,
+  "x": 220,
+  "y": 550,
+}
+`;
+
+exports[`tidy up integration > tidies messy flowchart via action 5`] = `
+{
+  "angle": 0,
+  "backgroundColor": "transparent",
+  "boundElements": [
+    {
+      "id": "tidy-arrow-decision-no",
+      "type": "arrow",
+    },
+    {
+      "id": "tidy-arrow-no-end",
+      "type": "arrow",
+    },
+  ],
+  "fillStyle": "hachure",
+  "frameId": null,
+  "groupIds": [],
+  "height": 50,
+  "id": "tidy-no",
+  "index": "a4",
+  "isDeleted": false,
+  "link": null,
+  "locked": false,
+  "opacity": 100,
+  "roughness": 1,
+  "roundness": null,
+  "seed": 1,
+  "strokeColor": "#000000",
+  "strokeStyle": "solid",
+  "strokeWidth": 1,
+  "type": "rectangle",
+  "updated": 1,
+  "version": 3,
+  "versionNonce": 745419401,
+  "width": 100,
+  "x": 20,
+  "y": 550,
+}
+`;
+
+exports[`tidy up integration > tidies messy flowchart via action 6`] = `
+{
+  "angle": 0,
+  "backgroundColor": "transparent",
+  "boundElements": [
+    {
+      "id": "tidy-arrow-yes-end",
+      "type": "arrow",
+    },
+    {
+      "id": "tidy-arrow-no-end",
+      "type": "arrow",
+    },
+  ],
+  "fillStyle": "hachure",
+  "frameId": null,
+  "groupIds": [],
+  "height": 60,
+  "id": "tidy-end",
+  "index": "a5",
+  "isDeleted": false,
+  "link": null,
+  "locked": false,
+  "opacity": 100,
+  "roughness": 1,
+  "roundness": null,
+  "seed": 1,
+  "strokeColor": "#000000",
+  "strokeStyle": "solid",
+  "strokeWidth": 1,
+  "type": "rectangle",
+  "updated": 1,
+  "version": 3,
+  "versionNonce": 1177973545,
+  "width": 120,
+  "x": 110,
+  "y": 700,
+}
+`;
+
+exports[`tidy up integration > tidies messy flowchart via action 7`] = `
+{
+  "angle": 0,
+  "backgroundColor": "transparent",
+  "boundElements": null,
+  "elbowed": true,
+  "endArrowhead": "arrow",
+  "endBinding": {
+    "elementId": "tidy-proc-a",
+    "fixedPoint": [
+      "0.50000",
+      0,
+    ],
+    "mode": "orbit",
+  },
+  "endIsSpecial": null,
+  "fillStyle": "hachure",
+  "fixedSegments": null,
+  "frameId": null,
+  "groupIds": [],
+  "height": 100,
+  "id": "tidy-arrow-start-proc-a",
+  "index": "a6",
+  "isDeleted": false,
+  "link": null,
+  "locked": false,
+  "opacity": 100,
+  "points": [
+    [
+      0,
+      0,
+    ],
+    [
+      0,
+      100,
+    ],
+  ],
+  "roughness": 1,
+  "roundness": null,
+  "seed": 1,
+  "startArrowhead": null,
+  "startBinding": {
+    "elementId": "tidy-start",
+    "fixedPoint": [
+      "0.50000",
+      1,
+    ],
+    "mode": "orbit",
+  },
+  "startIsSpecial": null,
+  "strokeColor": "#000000",
+  "strokeStyle": "solid",
+  "strokeWidth": 1,
+  "type": "arrow",
+  "updated": 1,
+  "version": 4,
+  "versionNonce": 1006504105,
+  "width": 0,
+  "x": "170.01200",
+  "y": 110,
+}
+`;
+
+exports[`tidy up integration > tidies messy flowchart via action 8`] = `
+{
+  "angle": 0,
+  "backgroundColor": "transparent",
+  "boundElements": null,
+  "elbowed": true,
+  "endArrowhead": "arrow",
+  "endBinding": {
+    "elementId": "tidy-decision",
+    "fixedPoint": [
+      "0.50000",
+      0,
+    ],
+    "mode": "orbit",
+  },
+  "endIsSpecial": null,
+  "fillStyle": "hachure",
+  "fixedSegments": null,
+  "frameId": null,
+  "groupIds": [],
+  "height": 100,
+  "id": "tidy-arrow-proc-a-decision",
+  "index": "a7",
+  "isDeleted": false,
+  "link": null,
+  "locked": false,
+  "opacity": 100,
+  "points": [
+    [
+      0,
+      0,
+    ],
+    [
+      "0.00200",
+      100,
+    ],
+  ],
+  "roughness": 1,
+  "roundness": null,
+  "seed": 1,
+  "startArrowhead": null,
+  "startBinding": {
+    "elementId": "tidy-proc-a",
+    "fixedPoint": [
+      "0.50000",
+      1,
+    ],
+    "mode": "orbit",
+  },
+  "startIsSpecial": null,
+  "strokeColor": "#000000",
+  "strokeStyle": "solid",
+  "strokeWidth": 1,
+  "type": "arrow",
+  "updated": 1,
+  "version": 4,
+  "versionNonce": 941653321,
+  "width": "0.00200",
+  "x": "170.01200",
+  "y": 270,
+}
+`;
+
+exports[`tidy up integration > tidies messy flowchart via action 9`] = `
+{
+  "angle": 0,
+  "backgroundColor": "transparent",
+  "boundElements": null,
+  "elbowed": true,
+  "endArrowhead": "arrow",
+  "endBinding": {
+    "elementId": "tidy-yes",
+    "fixedPoint": [
+      "0.50000",
+      0,
+    ],
+    "mode": "orbit",
+  },
+  "endIsSpecial": null,
+  "fillStyle": "hachure",
+  "fixedSegments": null,
+  "frameId": null,
+  "groupIds": [],
+  "height": 100,
+  "id": "tidy-arrow-decision-yes",
+  "index": "a8",
+  "isDeleted": false,
+  "link": null,
+  "locked": false,
+  "opacity": 100,
+  "points": [
+    [
+      0,
+      0,
+    ],
+    [
+      0,
+      50,
+    ],
+    [
+      "99.99600",
+      50,
+    ],
+    [
+      "99.99600",
+      100,
+    ],
+  ],
+  "roughness": 1,
+  "roundness": null,
+  "seed": 1,
+  "startArrowhead": null,
+  "startBinding": {
+    "elementId": "tidy-decision",
+    "fixedPoint": [
+      "0.50000",
+      1,
+    ],
+    "mode": "orbit",
+  },
+  "startIsSpecial": null,
+  "strokeColor": "#000000",
+  "strokeStyle": "solid",
+  "strokeWidth": 1,
+  "type": "arrow",
+  "updated": 1,
+  "version": 4,
+  "versionNonce": 1292308681,
+  "width": "99.99600",
+  "x": "170.01400",
+  "y": 450,
+}
+`;
+
+exports[`tidy up integration > tidies messy flowchart via action 10`] = `
+{
+  "angle": 0,
+  "backgroundColor": "transparent",
+  "boundElements": null,
+  "elbowed": true,
+  "endArrowhead": "arrow",
+  "endBinding": {
+    "elementId": "tidy-no",
+    "fixedPoint": [
+      "0.50000",
+      0,
+    ],
+    "mode": "orbit",
+  },
+  "endIsSpecial": null,
+  "fillStyle": "hachure",
+  "fixedSegments": null,
+  "frameId": null,
+  "groupIds": [],
+  "height": 100,
+  "id": "tidy-arrow-decision-no",
+  "index": "a9",
+  "isDeleted": false,
+  "link": null,
+  "locked": false,
+  "opacity": 100,
+  "points": [
+    [
+      0,
+      0,
+    ],
+    [
+      0,
+      50,
+    ],
+    [
+      "-100.00400",
+      50,
+    ],
+    [
+      "-100.00400",
+      100,
+    ],
+  ],
+  "roughness": 1,
+  "roundness": null,
+  "seed": 1,
+  "startArrowhead": null,
+  "startBinding": {
+    "elementId": "tidy-decision",
+    "fixedPoint": [
+      "0.50000",
+      1,
+    ],
+    "mode": "orbit",
+  },
+  "startIsSpecial": null,
+  "strokeColor": "#000000",
+  "strokeStyle": "solid",
+  "strokeWidth": 1,
+  "type": "arrow",
+  "updated": 1,
+  "version": 4,
+  "versionNonce": 1996028265,
+  "width": "100.00400",
+  "x": "170.01400",
+  "y": 450,
+}
+`;
+
+exports[`tidy up integration > tidies messy flowchart via action 11`] = `
+{
+  "angle": 0,
+  "backgroundColor": "transparent",
+  "boundElements": null,
+  "elbowed": true,
+  "endArrowhead": "arrow",
+  "endBinding": {
+    "elementId": "tidy-end",
+    "fixedPoint": [
+      "0.50000",
+      0,
+    ],
+    "mode": "orbit",
+  },
+  "endIsSpecial": null,
+  "fillStyle": "hachure",
+  "fixedSegments": null,
+  "frameId": null,
+  "groupIds": [],
+  "height": 100,
+  "id": "tidy-arrow-yes-end",
+  "index": "aA",
+  "isDeleted": false,
+  "link": null,
+  "locked": false,
+  "opacity": 100,
+  "points": [
+    [
+      0,
+      0,
+    ],
+    [
+      0,
+      50,
+    ],
+    [
+      "-99.99800",
+      50,
+    ],
+    [
+      "-99.99800",
+      100,
+    ],
+  ],
+  "roughness": 1,
+  "roundness": null,
+  "seed": 1,
+  "startArrowhead": null,
+  "startBinding": {
+    "elementId": "tidy-yes",
+    "fixedPoint": [
+      "0.50000",
+      1,
+    ],
+    "mode": "orbit",
+  },
+  "startIsSpecial": null,
+  "strokeColor": "#000000",
+  "strokeStyle": "solid",
+  "strokeWidth": 1,
+  "type": "arrow",
+  "updated": 1,
+  "version": 4,
+  "versionNonce": 2066753033,
+  "width": "99.99800",
+  "x": "270.01000",
+  "y": 600,
+}
+`;
+
+exports[`tidy up integration > tidies messy flowchart via action 12`] = `
+{
+  "angle": 0,
+  "backgroundColor": "transparent",
+  "boundElements": null,
+  "elbowed": true,
+  "endArrowhead": "arrow",
+  "endBinding": {
+    "elementId": "tidy-end",
+    "fixedPoint": [
+      "0.50000",
+      0,
+    ],
+    "mode": "orbit",
+  },
+  "endIsSpecial": null,
+  "fillStyle": "hachure",
+  "fixedSegments": null,
+  "frameId": null,
+  "groupIds": [],
+  "height": 100,
+  "id": "tidy-arrow-no-end",
+  "index": "aB",
+  "isDeleted": false,
+  "link": null,
+  "locked": false,
+  "opacity": 100,
+  "points": [
+    [
+      0,
+      0,
+    ],
+    [
+      0,
+      50,
+    ],
+    [
+      "100.00200",
+      50,
+    ],
+    [
+      "100.00200",
+      100,
+    ],
+  ],
+  "roughness": 1,
+  "roundness": null,
+  "seed": 1,
+  "startArrowhead": null,
+  "startBinding": {
+    "elementId": "tidy-no",
+    "fixedPoint": [
+      "0.50000",
+      1,
+    ],
+    "mode": "orbit",
+  },
+  "startIsSpecial": null,
+  "strokeColor": "#000000",
+  "strokeStyle": "solid",
+  "strokeWidth": 1,
+  "type": "arrow",
+  "updated": 1,
+  "version": 4,
+  "versionNonce": 271613161,
+  "width": "100.00200",
+  "x": "70.01000",
+  "y": 600,
+}
+`;
