@@ -1,0 +1,173 @@
+@import "../../packages/excalidraw/css/variables.module.scss";
+
+.layers-panel {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  z-index: var(--zIndex-layerUI);
+  width: 260px;
+  max-height: 40vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--island-bg-color);
+  border: 1px solid var(--default-border-color);
+  border-radius: var(--border-radius-lg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  font-size: 0.75rem;
+  color: var(--text-primary-color);
+  pointer-events: auto;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.625rem;
+    border-bottom: 1px solid var(--default-border-color);
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  &__toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-primary-color);
+    padding: 0.125rem 0.25rem;
+    border-radius: var(--border-radius-md);
+    line-height: 1;
+
+    &:hover {
+      background: var(--button-hover-bg);
+    }
+  }
+
+  &__list {
+    overflow-y: auto;
+    padding: 0.25rem 0;
+    flex: 1;
+    min-height: 0;
+  }
+
+  &__empty {
+    padding: 0.75rem;
+    color: var(--text-primary-color);
+    opacity: 0.6;
+    text-align: center;
+  }
+
+  &__frame {
+    margin-bottom: 0.125rem;
+  }
+
+  &__frame-header {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    user-select: none;
+    font-weight: 500;
+
+    &:hover {
+      background: var(--button-hover-bg);
+    }
+
+    &--selected {
+      background: var(--color-primary-light);
+    }
+  }
+
+  &__frame-chevron {
+    width: 0.75rem;
+    flex-shrink: 0;
+    opacity: 0.6;
+    font-size: 0.625rem;
+  }
+
+  &__frame-title {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__frame-actions {
+    display: flex;
+    gap: 0.125rem;
+    flex-shrink: 0;
+  }
+
+  &__children {
+    padding-left: 0.75rem;
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.2rem 0.5rem;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--button-hover-bg);
+    }
+
+    &--selected {
+      background: var(--color-primary-light);
+    }
+
+    &--hidden {
+      opacity: 0.45;
+    }
+  }
+
+  &__row-label {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+  }
+
+  &__row-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.125rem;
+    flex-shrink: 0;
+  }
+
+  &__action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-primary-color);
+    padding: 0.125rem;
+    border-radius: var(--border-radius-md);
+    width: 1.25rem;
+    height: 1.25rem;
+
+    svg {
+      width: 0.875rem;
+      height: 0.875rem;
+    }
+
+    &:hover {
+      background: var(--button-hover-bg);
+    }
+  }
+
+  &__frame-select {
+    font-size: 0.625rem;
+    max-width: 5.5rem;
+    padding: 0.1rem 0.2rem;
+    border: 1px solid var(--default-border-color);
+    border-radius: var(--border-radius-md);
+    background: var(--island-bg-color);
+    color: var(--text-primary-color);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+}
