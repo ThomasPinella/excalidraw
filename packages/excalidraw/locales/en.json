@@ -599,7 +599,11 @@
     "colors": "Colors",
     "shades": "Shades",
     "hexCode": "Hex code",
-    "noShades": "No shades available for this color"
+    "noShades": "No shades available for this color",
+    "errors": {
+      "invalidLength": "Hex code must be 3, 4, 6, or 8 characters",
+      "invalidCharacters": "Invalid characters in hex code"
+    }
   },
   "overwriteConfirm": {
     "action": {

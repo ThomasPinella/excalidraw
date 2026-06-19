@@ -357,3 +357,35 @@ export const normalizeInputColor = (color: string): string | null => {
 
   return null;
 };
+
+export type HexInputValidationError = "invalidCharacters" | "invalidLength";
+
+const VALID_HEX_LENGTHS = new Set([3, 4, 6, 8]);
+
+export const getHexInputValidationError = (
+  input: string,
+): HexInputValidationError | null => {
+  const trimmed = input.trim();
+  if (!trimmed) {
+    return null;
+  }
+
+  if (!/^[0-9a-fA-F]+$/.test(trimmed)) {
+    return "invalidCharacters";
+  }
+
+  if (!VALID_HEX_LENGTHS.has(trimmed.length)) {
+    return "invalidLength";
+  }
+
+  return null;
+};
+
+export const normalizeHexInputColor = (input: string): string | null => {
+  const trimmed = input.trim();
+  if (!trimmed || getHexInputValidationError(trimmed)) {
+    return null;
+  }
+
+  return `#${trimmed.toLowerCase()}`;
+};

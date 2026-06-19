@@ -1,6 +1,8 @@
 import {
   applyDarkModeFilter,
   COLOR_PALETTE,
+  getHexInputValidationError,
+  normalizeHexInputColor,
   rgbToHex,
 } from "@excalidraw/common";
 
@@ -212,6 +214,49 @@ describe("applyDarkModeFilter", () => {
       const result2 = applyDarkModeFilter("#ff0000");
       expect(result1).toBe(result2);
     });
+  });
+});
+
+describe("getHexInputValidationError", () => {
+  it("returns null for empty or whitespace input", () => {
+    expect(getHexInputValidationError("")).toBe(null);
+    expect(getHexInputValidationError("   ")).toBe(null);
+  });
+
+  it("returns null for valid hex lengths", () => {
+    expect(getHexInputValidationError("abc")).toBe(null);
+    expect(getHexInputValidationError("abcd")).toBe(null);
+    expect(getHexInputValidationError("ff0000")).toBe(null);
+    expect(getHexInputValidationError("ff000080")).toBe(null);
+  });
+
+  it("returns invalidLength for wrong lengths", () => {
+    expect(getHexInputValidationError("1")).toBe("invalidLength");
+    expect(getHexInputValidationError("12")).toBe("invalidLength");
+    expect(getHexInputValidationError("12345")).toBe("invalidLength");
+    expect(getHexInputValidationError("1234567")).toBe("invalidLength");
+    expect(getHexInputValidationError("123456789")).toBe("invalidLength");
+  });
+
+  it("returns invalidCharacters for non-hex characters", () => {
+    expect(getHexInputValidationError("zzzzzz")).toBe("invalidCharacters");
+    expect(getHexInputValidationError("blue")).toBe("invalidCharacters");
+    expect(getHexInputValidationError("gggggg")).toBe("invalidCharacters");
+  });
+});
+
+describe("normalizeHexInputColor", () => {
+  it("returns normalized hex with hash for valid input", () => {
+    expect(normalizeHexInputColor("abc")).toBe("#abc");
+    expect(normalizeHexInputColor("FF0000")).toBe("#ff0000");
+    expect(normalizeHexInputColor("ff000080")).toBe("#ff000080");
+    expect(normalizeHexInputColor("  ff0000  ")).toBe("#ff0000");
+  });
+
+  it("returns null for invalid input", () => {
+    expect(normalizeHexInputColor("blue")).toBe(null);
+    expect(normalizeHexInputColor("123456789")).toBe(null);
+    expect(normalizeHexInputColor("")).toBe(null);
   });
 });
 
