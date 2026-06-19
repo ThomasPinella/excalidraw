@@ -100,3 +100,58 @@ export type ColorPickerType =
   | "canvasBackground"
   | "elementBackground"
   | "elementStroke";
+
+const VALID_HEX_LENGTHS = [3, 4, 6, 8] as const;
+
+/**
+ * Normalizes hex-only color input for the color picker text field.
+ * Accepts 3, 4, 6, or 8 hexadecimal characters (with or without `#`).
+ */
+export const normalizeHexInputColor = (color: string): string | null => {
+  const trimmed = color.trim();
+  if (!trimmed) {
+    return null;
+  }
+
+  const hexOnly = trimmed.replace(/^#/, "");
+  if (!/^[0-9a-fA-F]+$/.test(hexOnly)) {
+    return null;
+  }
+
+  if (!VALID_HEX_LENGTHS.includes(hexOnly.length as 3 | 4 | 6 | 8)) {
+    return null;
+  }
+
+  const withHash = `#${hexOnly}`;
+  return withHash.toLowerCase();
+};
+
+/**
+ * Determines whether to show a hex input validation error.
+ * Defers errors for in-progress hex values (e.g. `ff` while typing `fff`).
+ */
+export const shouldShowHexInputError = (
+  value: string,
+  { onBlur = false }: { onBlur?: boolean } = {},
+): boolean => {
+  const trimmed = value.trim();
+  if (!trimmed || normalizeHexInputColor(trimmed)) {
+    return false;
+  }
+
+  if (onBlur) {
+    return true;
+  }
+
+  const hexOnly = trimmed.replace(/^#/, "");
+
+  if (!/^[0-9a-fA-F]*$/.test(hexOnly)) {
+    return true;
+  }
+
+  if (hexOnly.length > 8) {
+    return true;
+  }
+
+  return VALID_HEX_LENGTHS.includes(hexOnly.length as 3 | 4 | 6 | 8);
+};

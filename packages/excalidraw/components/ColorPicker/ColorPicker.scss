@@ -368,6 +368,11 @@
     }
   }
 
+  .color-picker__input {
+    display: flex;
+    flex-direction: column;
+  }
+
   .color-picker__input-label {
     display: grid;
     grid-template-columns: auto 1fr auto auto;
@@ -383,6 +388,22 @@
       box-shadow: 0 0 0 1px var(--color-primary-darkest);
       border-radius: var(--border-radius-lg);
     }
+
+    &--invalid {
+      border-color: var(--color-danger);
+
+      &:focus-within {
+        box-shadow: 0 0 0 1px var(--color-danger);
+      }
+    }
+  }
+
+  .color-picker__input-error {
+    margin: -4px 8px 8px;
+    padding: 0 0.5rem;
+    font-size: 0.75rem;
+    color: var(--color-danger-color);
+    text-align: left;
   }
 
   .color-picker__input-hash {
